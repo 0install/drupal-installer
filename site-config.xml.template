@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<interface xmlns="http://zero-install.sourceforge.net/2004/injector/interface">
+  <name>site-config</name>
+  <summary>my Drupal configuration</summary>
+
+  <implementation id="." version="0.1">
+    <!-- Use Drupal 7.x -->
+    <requires interface="http://0install.net/tests/Drupal.xml">
+      <version before="8" not-before="7"/>
+    </requires>
+
+    <!-- Settings -->
+
+    <!-- The (initially-empty) directory where we should put all the links -->
+    <environment mode='replace' name='doc_root' value='/var/www/drupal'/>
+
+    <!-- The user who should own the "files" directory and the "settings.php" file -->
+    <environment mode='replace' name='apache_user' value='www-data'/>
+
+    <!-- Modules -->
+    <!-- add extra modules here... -->
+  </implementation>
+</interface>

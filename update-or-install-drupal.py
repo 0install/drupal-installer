@@ -7,32 +7,36 @@ from zeroinstall.injector.driver import Driver
 from zeroinstall.injector.config import load_config
 from zeroinstall.support import tasks
 
-doc_root = None
-apache_user = None
-
-from config import *
-
-if not doc_root or not apache_user:
-	print "Edit config.py with your local settings and try again"
+mydir = os.path.dirname(os.path.abspath(__file__))
+site_config = os.path.join(mydir, 'site-config.xml')
+if not os.path.exists(site_config):
+	print "Copy site-config.xml.template as site-config.xml and edit..."
 	sys.exit(1)
-
-apache_user = pwd.getpwnam(apache_user)
-
-print "Document root:", doc_root
 
 drupal = "http://0install.net/tests/Drupal.xml"
 
 config = load_config()
-requirements = Requirements(drupal)
+requirements = Requirements(site_config)
 requirements.command = None
 driver = Driver(config, requirements)
 tasks.wait_for_blocker(driver.solve_and_download_impls())
+selections = driver.solver.selections.selections
 
-drupal_impl = driver.solver.selections.selections[drupal]
+drupal_impl = selections[drupal]
 drupal_root = drupal_impl.local_path or config.stores.lookup_any(drupal_impl.digests)
 
-print "Selected Drupal", drupal_impl.version
-print "(" + drupal_root+ ")"
+config_impl = selections[site_config]
+
+site_config_settings = {}
+for binding in config_impl.bindings:
+	site_config_settings[binding.name] = binding.value
+
+doc_root = site_config_settings["doc_root"]
+apache_user = pwd.getpwnam(site_config_settings["apache_user"])
+
+print "Selected Drupal", drupal_impl.version, "(" + drupal_root+ ")"
+print "Document root:", doc_root
+print "Apache user:", apache_user.pw_name
 
 def ensure_dir(path):
 	if not os.path.exists(path):
