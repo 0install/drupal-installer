@@ -18,6 +18,13 @@
     <environment mode='replace' name='apache_user' value='www-data'/>
 
     <!-- Modules -->
+
+    <!--
+    <requires interface='/home/tal/Projects/zero-install/htdocs/tests/Drupal-Shoutbox.xml'>
+      <environment name='drupal-modules' insert='shoutbox'/>
+    </requires>
+    -->
+
     <!-- add extra modules here... -->
   </implementation>
 </interface>
