@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<interface uri="http://0install.net/tests/Drupal-installer.xml" xmlns="http://zero-install.sourceforge.net/2004/injector/interface">
+  <name>Drupal-installer</name>
+  <summary>install Drupal using 0install</summary>
+  <description>
+</description>
+  <category>Network</category>
+  <needs-terminal/>
+  <implementation id="." license="OSI Approved :: GNU General Public License v2" main="update-or-install-drupal.py" version="0.1-pre">
+    <requires interface="http://0install.net/2007/interfaces/ZeroInstall.xml">
+      <version not-before="1.0"/>
+      <environment insert="" mode="prepend" name="PYTHONPATH"/>
+    </requires>
+  </implementation>
+</interface>
