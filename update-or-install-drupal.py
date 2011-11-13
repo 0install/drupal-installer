@@ -104,9 +104,9 @@ if not os.path.exists(htaccess):
 settings_file = os.path.join(sites_default_dir, 'settings.php')
 if not os.path.exists(settings_file):
 	cp(os.path.join(drupal_root, 'sites', 'default', 'default.settings.php'), settings_file)
+	ensure_owner(settings_file, apache_user)
 
 ensure_owner(files_dir, apache_user)
-ensure_owner(settings_file, apache_user)
 
 print "Updating modules..."
 
