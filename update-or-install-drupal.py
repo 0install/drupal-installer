@@ -7,6 +7,8 @@ from zeroinstall.injector.driver import Driver
 from zeroinstall.injector.config import load_config
 from zeroinstall.support import tasks
 
+refresh = True
+
 mydir = os.path.dirname(os.path.abspath(__file__))
 site_config = os.path.join(mydir, 'site-config.xml')
 if not os.path.exists(site_config):
@@ -19,7 +21,7 @@ config = load_config()
 requirements = Requirements(site_config)
 requirements.command = None
 driver = Driver(config, requirements)
-tasks.wait_for_blocker(driver.solve_and_download_impls())
+tasks.wait_for_blocker(driver.solve_and_download_impls(refresh = refresh))
 selections = driver.solver.selections.selections
 
 drupal_impl = selections[drupal]
@@ -121,20 +123,18 @@ for module in os.listdir(site_modules_dir):
 		old_modules.add(module)
 
 for impl in selections.values():
-	for dep in impl.dependencies:
-		dep_impl = selections[dep.interface]
-		for binding in dep.bindings:
-			if isinstance(binding, model.EnvironmentBinding) and binding.name == 'drupal-modules':
-				name = os.path.basename(binding.insert)
-				impl_root = dep_impl.local_path or config.stores.lookup_any(dep_impl.digests)
-				target = os.path.join(impl_root, binding.insert)
-				if not os.path.exists(target):
-					print "Module root {target} does not exist (in {interface} {version})".format(
-							target = target,
-							interface = dep.interface,
-							version = dep_impl.version)
-				ensure_link(dep_impl, target, os.path.join(site_modules_dir, name))
-				if name in old_modules: old_modules.remove(name)
+	for binding in impl.bindings:
+		if isinstance(binding, model.EnvironmentBinding) and binding.name == 'drupal-modules':
+			name = os.path.basename(binding.insert)
+			impl_root = impl.local_path or config.stores.lookup_any(impl.digests)
+			target = os.path.join(impl_root, binding.insert)
+			if not os.path.exists(target):
+				print "Module root {target} does not exist (in {interface} {version})".format(
+						target = target,
+						interface = impl.feed,
+						version = impl.version)
+			ensure_link(impl, target, os.path.join(site_modules_dir, name))
+			if name in old_modules: old_modules.remove(name)
 
 for module in old_modules:
 	rm(os.path.join(site_modules_dir, module))

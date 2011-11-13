@@ -4,9 +4,10 @@
   <summary>my Drupal configuration</summary>
 
   <implementation id="." version="0.1">
-    <!-- Use Drupal 7.x -->
+    <!-- Use Drupal 6.x -->
     <requires interface="http://0install.net/tests/Drupal.xml">
-      <version before="8" not-before="7"/>
+      <version before="7" not-before="6"/>
+      <!-- <version before="8" not-before="7"/> -->
     </requires>
 
     <!-- Settings -->
@@ -19,11 +20,7 @@
 
     <!-- Modules -->
 
-    <!--
-    <requires interface='http://0install.net/tests/Drupal-Shoutbox.xml'>
-      <environment name='drupal-modules' insert='shoutbox'/>
-    </requires>
-    -->
+    <!-- <requires interface='http://0install.net/tests/Drupal-Shoutbox.xml'/> -->
 
     <!-- add extra modules here... -->
   </implementation>
