@@ -20,7 +20,7 @@
     <!-- Modules -->
 
     <!--
-    <requires interface='/home/tal/Projects/zero-install/htdocs/tests/Drupal-Shoutbox.xml'>
+    <requires interface='http://0install.net/tests/Drupal-Shoutbox.xml'>
       <environment name='drupal-modules' insert='shoutbox'/>
     </requires>
     -->
