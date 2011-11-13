@@ -7,18 +7,16 @@ from zeroinstall.injector.driver import Driver
 from zeroinstall.injector.config import load_config
 from zeroinstall.support import tasks
 
-#################### Configuration ####################
+doc_root = None
+apache_user = None
 
-# The (initially-empty) directory where we should put all the links
-doc_root = '/var/www/drupal'
+from config import *
 
-# The user who should own the "files" directory and the "settings.php" file
-apache_user = pwd.getpwnam('www-data')
+if not doc_root or not apache_user:
+	print "Edit config.py with your local settings and try again"
+	sys.exit(1)
 
-# You will also need to install Apache, php5, etc, and create a MySQL
-# database. The Drupal installer should take you though most of the steps.
-
-#######################################################
+apache_user = pwd.getpwnam(apache_user)
 
 print "Document root:", doc_root
 
@@ -95,3 +93,5 @@ if not os.path.exists(settings_file):
 
 ensure_owner(files_dir, apache_user)
 ensure_owner(settings_file, apache_user)
+
+print "Done"
