@@ -18,6 +18,10 @@ if not os.path.exists(site_config):
 drupal = "http://repo.roscidus.com/drupal/core"
 
 config = load_config()
+
+import local_config
+local_config.apply_local_config(config)
+
 requirements = Requirements(site_config)
 requirements.command = None
 driver = Driver(config, requirements)

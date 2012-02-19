@@ -49,6 +49,38 @@ Open your new site in a browser and follow the normal Drupal configuration steps
   http://localhost/drupal/
 
 
+DEPLOYMENT ON sf.net
+
+The version of Python on sf.net's shell service is too old to run 0install. So,
+run it locally and rsync everything across. To do this, create a directory for
+the software (replace {project} with your project's name):
+
+$ mkdir -p /home/project-web/{project}/software/implementations
+
+Then edit local_config.py and set your project's name at the top.
+
+You will need to increase the PHP memory limit. Put this in settings.php:
+
+ini_set('memory_limit', '128M');
+
+Run update-or-install-drupal.py to update locally. When you're happy it's
+working, push to sf.net (you can use the push-to-sf.sh, after editing it with
+your details). This will:
+
+1. rsync the implementations directory to the same place on sf.net
+2. rsync the htdocs directory (after step 1 completes)
+
+If it's not working and you're not getting any error message, you can (temporarily)
+put this at the top of settings.py (after the initial "<?php" line):
+
+error_reporting(E_ALL);
+ini_set('display_errors', True);
+
+To send email, you need to add the SMTP module and configure it with your sf.net email
+password. See: https://sourceforge.net/apps/trac/sourceforge/wiki/Project%20Web%20Email%20Configuration
+"SSL" is the only auth setting that works.
+
+
 CONDITIONS
 
 This program is free software; you can redistribute it and/or
