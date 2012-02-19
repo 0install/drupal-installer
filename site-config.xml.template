@@ -4,10 +4,10 @@
   <summary>my Drupal configuration</summary>
 
   <implementation id="." version="0.1">
-    <!-- Use Drupal 6.x -->
-    <requires interface="http://0install.net/tests/Drupal.xml">
-      <version before="7" not-before="6"/>
-      <!-- <version before="8" not-before="7"/> -->
+    <!-- Use Drupal 7.x -->
+    <requires interface="http://repo.roscidus.com/drupal/core">
+      <!-- <version before="7" not-before="6"/> -->
+      <version before="8" not-before="7"/>
     </requires>
 
     <!-- Settings -->

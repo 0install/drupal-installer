@@ -1,0 +1,73 @@
+Drupal Installer (via 0install)
+
+Copyright Thomas Leonard, 2012
+
+
+INTRODUCTION
+
+This Drupal installer/updater can be used to create and maintain a Drupal
+installation. When run the first time, it uses 0install to download Drupal and
+any configured plugin modules. Running it again will download updates, if
+available.
+
+
+INSTALLATION
+
+Get Apache and MySQL from your distribution. For example, on Debian systems:
+
+$ sudo apt-get install apache2 mysql-server libapache2-mod-php5 php5-mysql
+
+
+USE
+
+Copy site-config.xml.template as site-config.xml.
+Edit site-config.xml to use your site-specific details:
+
+- doc_root [/var/www/drupal]
+- apache_user [www-data]
+
+You can also add extra modules here. When setting up a new site, it is best to
+start with no modules and add them later after the initial configuration is
+complete.
+
+To start, run:
+
+$ ./update-or-install-drupal.py
+
+You will need to set the owner of some directories to the Apache user (the script
+cannot do this itself, unless run as root). If you need to do this, you will see e.g.
+
+chown failed: [Errno 1] Operation not permitted: '/var/www/drupal/sites/default/settings.php'
+
+You can set the ownership manually like this:
+
+$ sudo chown www-data /var/www/drupal/sites/default/settings.php
+$ sudo chown www-data /var/www/drupal/sites/default/files
+
+Open your new site in a browser and follow the normal Drupal configuration steps:
+
+  http://localhost/drupal/
+
+
+CONDITIONS
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+
+BUG REPORTS
+
+Please report any bugs to the mailing list:
+
+  http://0install.net/support.html

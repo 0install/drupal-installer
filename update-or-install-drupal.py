@@ -15,7 +15,7 @@ if not os.path.exists(site_config):
 	print "Copy site-config.xml.template as site-config.xml and edit..."
 	sys.exit(1)
 
-drupal = "http://0install.net/tests/Drupal.xml"
+drupal = "http://repo.roscidus.com/drupal/core"
 
 config = load_config()
 requirements = Requirements(site_config)
